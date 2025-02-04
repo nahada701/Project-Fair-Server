@@ -21,10 +21,10 @@ pfServer.listen(PORT,()=>{
     
 })
  
-// pfServer.get('/',(req,res)=>{
-//     res.status(200).send(`<h1 style="color:red">Project  server running  @ port 3000 and waiting for client request !!! </h1>`)
+pfServer.get('/',(req,res)=>{
+    res.status(200).send(`<h1 style="color:red">Project  server running  @ port 3000 and waiting for client request !!! </h1>`)
 
-// })
+})
 
  
 
