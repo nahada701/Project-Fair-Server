@@ -1,0 +1,256 @@
+Node js
+
+
+Runtime Environment + JavaScript Library: Node.js is a runtime that allows you to run JavaScript code outside the browser, enabling JavaScript to be used for server-side programming. It also includes a large set of libraries for file handling, networking, and more.
+
+Extremely Fast Technology: Node.js is known for its high performance, especially for I/O-heavy tasks. This is due to the V8 JavaScript engine, which is used in Chrome, making JavaScript execution fast.
+
+V8 Engine: Node.js uses Google's V8 engine (the same engine that powers Google Chrome), which compiles JavaScript directly to machine code for improved execution speed.
+
+Handles Asynchronous Code: Node.js excels at handling asynchronous code, thanks to its event-driven, non-blocking I/O model. This allows Node.js to perform many tasks concurrently without waiting for each operation to complete before starting the next.
+
+Single-threaded: Node.js operates on a single thread, meaning that it runs on one core of the processor. However, it uses the event loop to handle multiple operations without blocking, enabling concurrent processing.
+
+Event Loop: The event loop allows Node.js to handle multiple operations (such as file reading, network requests, etc.) without needing multiple threads. It queues operations and processes them one by one, but never blocks the thread.
+
+Highly Scalable: Due to its event-driven nature, Node.js is highly scalable and can handle a large number of concurrent connections. This is particularly useful for building real-time applications, like chat applications or live updates.
+
+Open Source: Node.js is open-source, with a large community of developers contributing to its growth. This means anyone can contribute to its development or use it freely.
+
+
+
+3.Nodejs Global objects
+        -it can access anywhere from node js app without exporting or importing:eg:console.log
+4.Nodejs module file system
+        -Each file is considered a separate module in Node.js.
+        -You can import and export functions, objects, or variables  between different modules.
+        -import using : require('module'/'path')  if its from a lib then only module
+       - export single: module.exports=functionname
+       - export multiple:exports.functionname=()=>{..}       
+
+node js built-in modules
+        -fs:file system :Handles file related events
+        -http:to create web serveer
+        -https:to create web serveer
+        -crypto:provides tool like hashing ,encryption etc.
+        -events:handles event related things work with eventEmitter
+        -process:hold current running process in the nodejs app\
+                --to hold environmental variable: .env file holds confidential or configuration data varibles
+                --process is an object (global no need of importing)::need to use env varibles in the app
+                we first load to process that variable
+                to access  "process.env.variable_name"
+
+node js packages:
+        -used to resolve commen problems 
+        -we have to install package via npm (node package manager)
+        -it adds package.json package-lock.json and node module
+
+backend use-to create client server architecture
+-REST API
+A REST API (Representational State Transfer Application Programming Interface) is a set of rules and conventions for building and interacting with web services. It allows different software applications to communicate with each other over the web, using standard HTTP methods such as GET, POST, PUT, DELETE, etc. RESTful APIs are designed to be lightweight, scalable, and stateless.
+
+-client-server architecture
+-http protocol and json data
+-CRUD
+-CORS (cross origin resource share) its a middleware it should be enabled in server to communicate front end to backend
+
+
+
+--------------------------------------------------------------------------
+
+server creation using express js (frame work of node js)
+
+________________________________________________________
+-used in client server architecture as web server
+
+STEPS:
+
+1-create new folder for server
+2-create package.json file using "npm init -y"
+3-update script inside package.json to "start":"node index.js"
+4-install packages 
+                -express using npm i express
+                -cors using npm i cors
+                -dotenv using npm i dotenv
+                "npm i express dotenv cors"
+5-create .env file
+6-create .gitignore file and mention .env and node_modules
+7-create index.js
+8-import all dependancies
+                require("dotenv").config()
+                const cors=require('cors')
+                const express=require('express')
+9-create server 
+                const serverName=express()
+                serverName.use(cors())
+                serverName.use(express.json())
+
+// any task to do in the middle of req and response like change data or autherasation
+// to change json to js object express.json method its a middleware
+
+10-create port for server app
+const PORT=3000||process.env.PORT
+
+11-Run server
+
+serverName.listen(PORT,()=>{
+    console.log(`projectFair server running at port ${PORT}`);
+    
+})
+ 12 install nodemon to reflect any changes in the code without rerendering
+        npm i nodemon 
+13 now run using nodemon index.js
+
+ 
+
+-Create DB using mongoDB Atlas: cloud version of mongoDB
+  
+-create route in express server 
+        - create a router folder
+        -create js file router.js
+-express library helps to create route 
+-import express lib in that file            
+
+-create an instance for router class in express it is capable of defining route for the app
+-export router from the file
+-import in index.js
+-use router server in express server
+
+--------------------------------------------------------------------------
+mongoose- Object data model (ODM)  in node js
+--------------------------------------------------------------------------
+ 
+1.inatall mongoose using npm i mongoose
+2.create a folder called model ("this models is the one interacting with the mongodb ")
+3.inside that create each model for each collection and define its schema 
+4.to create schema Schema class of the mongoose is used inside that define all the details of of the collections schema as object
+
+const userSchema=new mongoose.Schema({
+    username:{
+
+        type:string,
+        require:true
+
+    },
+    email:{
+
+        type:string,
+        require:true,
+        unique:true
+
+    },
+    password:{
+
+        type:string,
+        require:true
+
+    },
+    github:{
+
+        type:string,
+
+    },
+    linkedin:{
+
+        type:string,
+
+    },
+    profilepic:{
+
+        type:string,
+
+    }
+}) 
+
+5.create a model using model method of mongoose
+
+const users=mongoose.model("users",userSchema)
+
+6.the name of the model and the name of the collection should be same because model os the copy of mongoDB
+
+
+JsonWebToken(jsw)
+
+-library used to authenticate in client-server request
+-used to securly transfer information over the web
+-install using npm i JsonWebToken
+-generate tokeen only if success
+-token creation using jsw:use sign(payload,password)
+        -payload is the data we want to store inside token usually and id 
+        -password:can be anydata that has to define in .env file
+        
+
+
+MIDDLEWARE: Node js
+--------------------
+-middelware is a function used to break req-res cycle 
+-before resolving a req server cna perform tasks(autherization,data format changing etc)
+
+-middelware is function with 3 arguments req res next
+        -request : client side req can be accessed
+        -response: an object thet will give response back to the client
+        -next: method used to control request 
+-2 type middleware
+        -application specific middleware - commen for all req-res - eg: express.json()
+        -router specific middleware - only for particular router req eg: for autherization
+
+
+set up autherization using middleware
+--------------------------------------
+
+create a separate for middlewares
+create a js file inside the folder to create middleware
+token varification using jwt :varify(token,passwrod) return a response if varify else an error
+
+
+const jwt=require('jsonwebtoken')
+
+const jwtMiddleware=(req,res,next)=>{
+
+    console.log("inside jwt middleware");
+    const token=req.headers["authorization"].split(" ")[1]
+    if(token){
+        try{
+            const jwtResponse=jwt.verify(token,process.env.JWT_PASSWORD) 
+            console.log(jwtResponse)
+            req.userId=jwtResponse.userId
+            next()
+        }
+        catch(err){
+            res.status(401).json("Autherization failed please login")
+        }
+        
+       
+    }
+    else{
+        res.status(404).json("authorization failed")
+    }
+
+}
+
+module.exports=jwtMiddleware
+
+
+
+
+///Multer to handle multipart/formdata //
+----------------------------------------
+
+multet get req form client and it will classify text related data and it will store in req.body and files will be stored in req.file
+
+install 'npm i multer'
+multer can used to define storage space for uploaded file
+
+Steps:
+    create a js file inside middleware folder
+    import multer
+    create a folder in server folder to store uploaded files
+    define storage space using discStorage method and pass argument ({destination:(req,file,callback)=>{
+
+    }})
+
+
+    ,multerMiddleware.single('projectImg'),
+
+    means
+
